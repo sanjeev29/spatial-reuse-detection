@@ -1,0 +1,8 @@
+Loop Nest: 1
+  %1 = load i32, ptr %arrayidx5, align 8, !tbaa !5
+level: 2
+stride: 2
+  store i32 %add, ptr %arrayidx9, align 4, !tbaa !5
+level: 2
+stride: 1
+
