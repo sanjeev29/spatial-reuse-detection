@@ -269,8 +269,7 @@ static void analyzeArrayReference(raw_ostream &OS, Instruction *I,
     }
 }
 
-static void analyzeSpatialReuse(raw_ostream &OS, DependenceInfo *DA,
-                               ScalarEvolution &SE, LoopInfo &LI) {
+static void analyzeSpatialReuse(raw_ostream &OS, ScalarEvolution &SE, LoopInfo &LI) {
   
   OS << "Loop Nest: " << ++loopNestCounter << "\n";
 
@@ -304,7 +303,7 @@ void DependenceAnalysisWrapperPass::print(raw_ostream &OS,
   // dumpExampleDependence(OS, info.get(),
   //                      getAnalysis<ScalarEvolutionWrapperPass>().getSE(), false);
 
-  analyzeSpatialReuse(OS, info.get(),
+  analyzeSpatialReuse(OS,
                       getAnalysis<ScalarEvolutionWrapperPass>().getSE(),
                       getAnalysis<LoopInfoWrapperPass>().getLoopInfo());
 }
@@ -315,8 +314,7 @@ DependenceAnalysisPrinterPass::run(Function &F, FunctionAnalysisManager &FAM) {
   //                       FAM.getResult<ScalarEvolutionAnalysis>(F),
   //                       NormalizeResults);
 
-  analyzeSpatialReuse(OS, &FAM.getResult<DependenceAnalysis>(F),
-                      FAM.getResult<ScalarEvolutionAnalysis>(F),
+  analyzeSpatialReuse(OS, FAM.getResult<ScalarEvolutionAnalysis>(F),
                       FAM.getResult<LoopAnalysis>(F));
 
   return PreservedAnalyses::all();
